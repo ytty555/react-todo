@@ -1,3 +1,7 @@
-todo-item {
-  padding: 5em
+.todo-list-item {
+  padding: 0, 10px, 0, 10px;
+}
+
+.btn-my {
+  border: 2px solid lightgrey
 }
