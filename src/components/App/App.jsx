@@ -9,13 +9,31 @@ import './App.css';
 class App extends Component {
   state = {
     todoData: [
-      {lable: 'Learn React', important: true, id: 556697656522165},
-      {lable: 'Drink Coffee', important: false, id: 654651266558879},
-      {lable: 'Do exercises', important: true, id: 546858566563664},
-      {lable: 'Take a rest', important: false, id: 685285654144451},
-      {lable: 'Read a book', important: false, id: 546542343324654}
+      this.createItem('Learn React'),
+      this.createItem('Drink Coffee'),
+      this.createItem('Do exercises'),
+      this.createItem('Take a rest'),
+      this.createItem('Read a book')
     ]
   };
+
+  handleToggleItemDone = (id) => {
+    this.setState(({todoData}) => {
+      const newTodoData = [...todoData];
+      const index = newTodoData.findIndex((el) => el.id === id);
+      newTodoData[index].done = !newTodoData[index].done;
+      return {todoData: newTodoData};
+    });
+  }
+  
+  handleToggleItemImportant = (id) => {
+    this.setState(({todoData}) => {
+      const newTodoData = [...todoData];
+      const index = newTodoData.findIndex((el) => el.id === id);
+      newTodoData[index].important = !newTodoData[index].important;
+      return {todoData: newTodoData}
+    })
+  }
 
   handleDelete = id => {
     this.setState(({todoData}) => {
@@ -31,13 +49,20 @@ class App extends Component {
     })
   };
 
-  handleAddItem = () => {
+  createItem(text) {
     const id = parseInt(Math.random() * 1000000000000000);
     const newItemObj = {
-      lable: 'New Item',
+      lable: text,
+      done: false,
       important: false,
       id: id
     }
+
+    return newItemObj;
+  }
+
+  handleAddItem = () => {
+    const newItemObj = this.createItem('New Item');
     this.setState(({todoData}) => {
       const newTodoData = [...todoData, newItemObj]
       return {
@@ -45,17 +70,24 @@ class App extends Component {
       }
     })
   }
-
+  
+  
   render() {
+    const {todoData} = this.state;
+    const doneCount = todoData.filter((el) => el.done).length;
+    const todoCount = todoData.length - doneCount;
+
     return (
       <section className="container app-container">
         <div className="row justify-content-center">
           <div className="col-5">
-            <AppHeader />
+            <AppHeader todo={todoCount} done={doneCount}/>
             <SearchPanel />
             <TodoList
               todoData={this.state.todoData}
               onDelete={this.handleDelete}
+              onToggleItemDone={this.handleToggleItemDone}
+              onToggleItemImportant={this.handleToggleItemImportant}
             />
             <ItemAdd onAddItem={this.handleAddItem} />
           </div>

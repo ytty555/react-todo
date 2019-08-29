@@ -3,35 +3,19 @@ import React, {Component} from 'react';
 import './todoListItem.css';
 
 class TodoListItem extends Component {
-  state = {
-    done: false,
-    important: false
-  };
-
-  handleDone = () => {
-    this.setState(({done}) => {
-      return {done: !done};
-    });
-  };
-
-  handleImportant = () => {
-    this.setState(({important}) => {
-      return {important: !important};
-    });
-  };
 
   render() {
-    const {done, important} = this.state;
-    const {lable, onDelete} = this.props;
+    const {lable, done, important, onDelete, onToggleItemDone, onToggleItemImportant} = this.props;
     const importantClassName = important ? 'fa fa-star' : 'fa fa-star-o';
     let itemClassNames = 'row justify-content-between todo-list-item';
 
     itemClassNames = done ? itemClassNames + ' done' : itemClassNames;
     itemClassNames = important ? itemClassNames + ' important' : itemClassNames;
 
+
     return (
       <div className={itemClassNames}>
-        <span className="col-9" onClick={this.handleDone}>
+        <span className="col-9" onClick={onToggleItemDone}>
           {lable}
         </span>
         <button
@@ -44,7 +28,7 @@ class TodoListItem extends Component {
         <button
           type="button"
           className="btn btn-light col-1 btn-my"
-          onClick={this.handleImportant}
+          onClick={onToggleItemImportant}
         >
           <i className={importantClassName}></i>
         </button>
