@@ -10,20 +10,20 @@ const todoData = [
   {lable: 'Drink Coffee', important: false},
   {lable: 'Do exercises', important: true},
   {lable: 'Take a rest', important: false},
-  {lable: 'Read a book', important: false},
+  {lable: 'Read a book', important: false}
 ];
 
 const App = () => {
   return (
-    <container className='container app-container'>
-      <div className='row justify-content-center'>
-        <div className='col-5'>
+    <section className="container app-container">
+      <div className="row justify-content-center">
+        <div className="col-5">
           <AppHeader />
           <SearchPanel />
-          <TodoList todoData={todoData}/>
+          <TodoList todoData={todoData} />
         </div>
       </div>
-    </container>
+    </section>
   );
 };
 
