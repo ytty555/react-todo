@@ -24,7 +24,7 @@ class TodoListItem extends Component {
     const {done, important} = this.state;
     const {lable, onDelete} = this.props;
     const importantClassName = important ? 'fa fa-star' : 'fa fa-star-o';
-    let itemClassNames = 'row align-items-center todo-list-item';
+    let itemClassNames = 'row justify-content-between todo-list-item';
 
     itemClassNames = done ? itemClassNames + ' done' : itemClassNames;
     itemClassNames = important ? itemClassNames + ' important' : itemClassNames;

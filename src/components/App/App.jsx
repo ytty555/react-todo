@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import TodoList from '../TodoList/TodoList';
 import AppHeader from '../AppHeader/AppHeader';
 import SearchPanel from '../SearchPanel/SearchPanel';
+import ItemAdd from '../ItemAdd/ItemAdd';
 import './App.css';
 
 class App extends Component {
@@ -17,8 +18,33 @@ class App extends Component {
   };
 
   handleDelete = id => {
-    console.log(id);
+    this.setState(({todoData}) => {
+      // Создаем копию массива todoData из state
+      const todoDataCopy = todoData.slice();
+      // Получаем индекс элемента, который нужно удалить
+      const index = todoDataCopy.findIndex((el) => el.id === id);
+      // Удаляем элемент по индексу
+      todoDataCopy.splice(index, 1);
+      return {
+        todoData: todoDataCopy
+      };
+    })
   };
+
+  handleAddItem = () => {
+    const id = parseInt(Math.random() * 1000000000000000);
+    const newItemObj = {
+      lable: 'New Item',
+      important: false,
+      id: id
+    }
+    this.setState(({todoData}) => {
+      const newTodoData = [...todoData, newItemObj]
+      return {
+        todoData: newTodoData
+      }
+    })
+  }
 
   render() {
     return (
@@ -31,6 +57,7 @@ class App extends Component {
               todoData={this.state.todoData}
               onDelete={this.handleDelete}
             />
+            <ItemAdd onAddItem={this.handleAddItem} />
           </div>
         </div>
       </section>
