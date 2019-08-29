@@ -4,13 +4,12 @@
 }
 
 .btn-my {
-  border: 2px solid lightgrey
+  border: 2px solid lightgrey;
 }
-
 
 .important span {
   font-weight: bold;
-  color: blue;
+  color: #5bc0de;
 }
 
 .done span {
@@ -19,5 +18,5 @@
 }
 
 .fa-star {
-  color: blue;
+  color: #5bc0de;
 }
