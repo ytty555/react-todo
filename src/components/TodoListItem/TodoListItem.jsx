@@ -22,7 +22,7 @@ class TodoListItem extends Component {
 
   render() {
     const {done, important} = this.state;
-    const {lable} = this.props;
+    const {lable, onDelete} = this.props;
     const importantClassName = important ? 'fa fa-star' : 'fa fa-star-o';
     let itemClassNames = 'row align-items-center todo-list-item';
 
@@ -34,7 +34,11 @@ class TodoListItem extends Component {
         <span className="col-9" onClick={this.handleDone}>
           {lable}
         </span>
-        <button type="button" className="btn btn-light col-1 btn-my mr-1">
+        <button
+          type="button"
+          className="btn btn-light col-1 btn-my mr-1"
+          onClick={onDelete}
+        >
           <i className="fa fa-trash-o"></i>
         </button>
         <button

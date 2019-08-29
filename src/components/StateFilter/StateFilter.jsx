@@ -5,7 +5,7 @@ import './StateFilter.css';
 class StateFilter extends Component {
   state = {
     btnCheck: {
-      all: false,
+      all: true,
       active: false,
       done: false
     }
