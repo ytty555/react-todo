@@ -1,7 +1,7 @@
 import React from 'react';
 
 import TodoListItem from '../TodoListItem/TodoListItem'
-import '../TodoList/todoList.css'
+import './TodoList.css'
 
 const TodoList = ({todoData}) => {
   const generateKey = () => {

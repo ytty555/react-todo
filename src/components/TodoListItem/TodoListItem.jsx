@@ -1,19 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-import './todoListItem.css';
+import './TodoListItem.css';
 
-const TodoListItem = ({lable, important}) => {
-  const style = {
-    color: important ? 'tomato' : 'black'
-  };
+class TodoListItem extends Component {
+  state = {
+    done: false,
+    important: false
+  }
 
-  return (
-    <div className='row align-items-center todo-list-item'>
-      <span className='col-9' style={style}>{ lable }</span>
-      <button type="button" class="btn btn-light col-1 btn-my mr-1"><i class="fa fa-trash-o"></i></button>
-      <button type="button" class="btn btn-light col-1 btn-my"><i class="fa fa-star-o"></i></button>
+  handleDone = () => {
+    this.setState(({ done }) => {
+      return { done: !done };
+    })
+  }
+
+  handleImportant = () => {
+    this.setState(({ important }) => {
+      return { important: !important };
+    })
+  }
+
+  render() {
+    const { done, important } = this.state;
+    const { lable } = this.props;
+    const importantClassName = important ? 'fa fa-star' : 'fa fa-star-o';
+    let itemClassNames = 'row align-items-center todo-list-item';
+
+    itemClassNames = done ? itemClassNames + ' done' : itemClassNames;
+    itemClassNames = important ? itemClassNames + ' important' : itemClassNames;
+
+    return (
+      <div class={itemClassNames}>
+        <span class='col-9' onClick={this.handleDone}>{ lable }</span>
+        <button type="button" class="btn btn-light col-1 btn-my mr-1"><i className="fa fa-trash-o"></i></button>
+        <button type="button" class="btn btn-light col-1 btn-my" onClick={this.handleImportant}><i class={importantClassName}></i></button>
     </div>
-  );
-};
+    );
+  }
+}
 
 export default TodoListItem;
