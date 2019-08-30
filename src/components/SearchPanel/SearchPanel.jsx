@@ -19,6 +19,7 @@ class SearchPanel extends Component {
   };
 
   render() {
+    const {onFilter} = this.props;
     return (
       <form className="row mb-3" onSubmit={this.handleOnSubmint}>
         <div className="input-group col-8">
@@ -30,7 +31,7 @@ class SearchPanel extends Component {
             onChange={this.handleOnChange}
           ></input>
         </div>
-        <StateFilter />
+        <StateFilter onFilter={onFilter} />
       </form>
     );
   }

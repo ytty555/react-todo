@@ -88,6 +88,25 @@ class App extends Component {
     });
   };
 
+  handleFilter = filter => {
+    this.setState(({todoData}) => {
+      const todoDataCopy = [...todoData];
+      if (filter === 'all') {
+        todoDataCopy.forEach(el => (el.visible = true));
+      } else if (filter === 'active') {
+        todoDataCopy.forEach(el => {
+          el.visible = el.done ? false : true;
+        });
+      } else if (filter === 'done') {
+        todoDataCopy.forEach(el => {
+          el.visible = el.done ? true : false;
+        });
+      }
+
+      return {todoData: todoDataCopy};
+    });
+  };
+
   render() {
     const {todoData} = this.state;
     const doneCount = todoData.filter(el => el.done).length;
@@ -98,7 +117,10 @@ class App extends Component {
         <div className="row justify-content-center">
           <div className="col-5">
             <AppHeader todo={todoCount} done={doneCount} />
-            <SearchPanel onSearchString={this.handleSearchString} />
+            <SearchPanel
+              onSearchString={this.handleSearchString}
+              onFilter={this.handleFilter}
+            />
             <TodoList
               todoData={this.state.todoData}
               onDelete={this.handleDelete}

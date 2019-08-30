@@ -12,6 +12,7 @@ class StateFilter extends Component {
   };
 
   handleBtnChecked = e => {
+    const {onFilter} = this.props;
     // Take button name as string
     const currBtn = e.target.textContent.toLowerCase();
     // Make copy of the state to variable "stateCopy"
@@ -27,10 +28,13 @@ class StateFilter extends Component {
         btnCheck: stateCopy
       };
     });
+
+    onFilter(currBtn);
   };
 
   render() {
     const {btnCheck} = this.state;
+
     const allClassName = btnCheck.all
       ? 'btn btn-info'
       : 'btn btn-outline-secondary';
