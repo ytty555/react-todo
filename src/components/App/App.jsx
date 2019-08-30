@@ -9,79 +9,78 @@ import './App.css';
 class App extends Component {
   state = {
     todoData: [
-      this.createItem('Learn React'),
-      this.createItem('Drink Coffee'),
-      this.createItem('Do exercises'),
-      this.createItem('Take a rest'),
-      this.createItem('Read a book')
+      this.createItemObj('Learn React'),
+      this.createItemObj('Drink Coffee'),
+      this.createItemObj('Do exercises'),
+      this.createItemObj('Take a rest'),
+      this.createItemObj('Read a book')
     ]
   };
 
-  handleToggleItemDone = (id) => {
+  handleToggleItemDone = id => {
     this.setState(({todoData}) => {
       const newTodoData = [...todoData];
-      const index = newTodoData.findIndex((el) => el.id === id);
+      const index = newTodoData.findIndex(el => el.id === id);
       newTodoData[index].done = !newTodoData[index].done;
       return {todoData: newTodoData};
     });
-  }
-  
-  handleToggleItemImportant = (id) => {
+  };
+
+  handleToggleItemImportant = id => {
     this.setState(({todoData}) => {
       const newTodoData = [...todoData];
-      const index = newTodoData.findIndex((el) => el.id === id);
+      const index = newTodoData.findIndex(el => el.id === id);
       newTodoData[index].important = !newTodoData[index].important;
-      return {todoData: newTodoData}
-    })
-  }
+      return {todoData: newTodoData};
+    });
+  };
 
   handleDelete = id => {
     this.setState(({todoData}) => {
       // Создаем копию массива todoData из state
       const todoDataCopy = todoData.slice();
       // Получаем индекс элемента, который нужно удалить
-      const index = todoDataCopy.findIndex((el) => el.id === id);
+      const index = todoDataCopy.findIndex(el => el.id === id);
       // Удаляем элемент по индексу
       todoDataCopy.splice(index, 1);
       return {
         todoData: todoDataCopy
       };
-    })
+    });
   };
 
-  createItem(text) {
+  createItemObj(text) {
     const id = parseInt(Math.random() * 1000000000000000);
     const newItemObj = {
       lable: text,
       done: false,
       important: false,
       id: id
-    }
+    };
 
     return newItemObj;
   }
 
-  handleAddItem = (text) => {
-    const newItemObj = this.createItem(text);
+  handleAddItemToList = text => {
+    const newItemObj = this.createItemObj(text);
     this.setState(({todoData}) => {
-      const newTodoData = [...todoData, newItemObj]
+      const newTodoData = [...todoData, newItemObj];
       return {
         todoData: newTodoData
-      }
-    })
-  }
-  
-  
+      };
+    });
+  };
+
   render() {
     const {todoData} = this.state;
-    const doneCount = todoData.filter((el) => el.done).length;
+    const doneCount = todoData.filter(el => el.done).length;
     const todoCount = todoData.length - doneCount;
 
     return (
       <section className="container app-container">
         <div className="row justify-content-center">
           <div className="col-5">
-            <AppHeader todo={todoCount} done={doneCount}/>
+            <AppHeader todo={todoCount} done={doneCount} />
             <SearchPanel />
             <TodoList
               todoData={this.state.todoData}
@@ -89,7 +88,7 @@ class App extends Component {
               onToggleItemDone={this.handleToggleItemDone}
               onToggleItemImportant={this.handleToggleItemImportant}
             />
-            <ItemAdd onAddItem={this.handleAddItem} />
+            <ItemAdd onAddItem={this.handleAddItemToList} />
           </div>
         </div>
       </section>
