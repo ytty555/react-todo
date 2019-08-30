@@ -55,6 +55,7 @@ class App extends Component {
       lable: text,
       done: false,
       important: false,
+      visible: true,
       id: id
     };
 
@@ -71,6 +72,22 @@ class App extends Component {
     });
   };
 
+  handleSearchString = text => {
+    const regExp = new RegExp(text, 'i');
+    this.setState(({todoData}) => {
+      const todoDataCopy = [...todoData];
+      todoDataCopy.forEach(el => {
+        if (el.lable.search(regExp) !== -1) {
+          el.visible = true;
+        } else {
+          el.visible = false;
+        }
+      });
+
+      return {todoData: todoDataCopy};
+    });
+  };
+
   render() {
     const {todoData} = this.state;
     const doneCount = todoData.filter(el => el.done).length;
@@ -81,7 +98,7 @@ class App extends Component {
         <div className="row justify-content-center">
           <div className="col-5">
             <AppHeader todo={todoCount} done={doneCount} />
-            <SearchPanel />
+            <SearchPanel onSearchString={this.handleSearchString} />
             <TodoList
               todoData={this.state.todoData}
               onDelete={this.handleDelete}
