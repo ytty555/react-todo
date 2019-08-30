@@ -61,8 +61,8 @@ class App extends Component {
     return newItemObj;
   }
 
-  handleAddItem = () => {
-    const newItemObj = this.createItem('New Item');
+  handleAddItem = (text) => {
+    const newItemObj = this.createItem(text);
     this.setState(({todoData}) => {
       const newTodoData = [...todoData, newItemObj]
       return {
