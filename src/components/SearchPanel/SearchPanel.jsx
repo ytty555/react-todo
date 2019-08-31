@@ -5,23 +5,23 @@ import './SearchPanel.css';
 
 class SearchPanel extends Component {
   state = {
-    lable: ''
+    lable: 'l'
   };
 
+
+  // TODO
   handleOnChange = e => {
-    this.setState({lable: e.target.value});
-  };
-
-  handleOnSubmint = e => {
     const {onSearchString} = this.props;
-    e.preventDefault();
+
+    this.setState({lable: e.target.value});
     onSearchString(this.state.lable);
+
   };
 
   render() {
     const {onFilter} = this.props;
     return (
-      <form className="row mb-3" onSubmit={this.handleOnSubmint}>
+      <div className="row mb-3">
         <div className="input-group col-8">
           <input
             type="text"
@@ -32,7 +32,7 @@ class SearchPanel extends Component {
           ></input>
         </div>
         <StateFilter onFilter={onFilter} />
-      </form>
+      </div>
     );
   }
 }

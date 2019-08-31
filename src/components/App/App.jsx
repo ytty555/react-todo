@@ -14,8 +14,19 @@ class App extends Component {
       this.createItemObj('Do exercises'),
       this.createItemObj('Take a rest'),
       this.createItemObj('Read a book')
-    ]
+    ],
+    search: '', // any symbols
+    filter: '' // 'all', 'active', 'done'
   };
+
+  visibleItems(items, search) {
+    if (!search) return items;
+    
+    const regexp = new RegExp(search, 'i');
+    console.log('regexp ', regexp);
+    console.log(regexp);
+    return items.filter((item) => item.lable.search(regexp) > -1);
+  }
 
   handleToggleItemDone = id => {
     this.setState(({todoData}) => {
@@ -55,7 +66,6 @@ class App extends Component {
       lable: text,
       done: false,
       important: false,
-      visible: true,
       id: id
     };
 
@@ -72,21 +82,6 @@ class App extends Component {
     });
   };
 
-  handleSearchString = text => {
-    const regExp = new RegExp(text, 'i');
-    this.setState(({todoData}) => {
-      const todoDataCopy = [...todoData];
-      todoDataCopy.forEach(el => {
-        if (el.lable.search(regExp) !== -1) {
-          el.visible = true;
-        } else {
-          el.visible = false;
-        }
-      });
-
-      return {todoData: todoDataCopy};
-    });
-  };
 
   handleFilter = filter => {
     this.setState(({todoData}) => {
@@ -107,8 +102,14 @@ class App extends Component {
     });
   };
 
+  handleSearchString = search => {
+    this.setState(({search}) => {
+      return {search};
+    })
+  }
+
   render() {
-    const {todoData} = this.state;
+    const {todoData, search} = this.state;
     const doneCount = todoData.filter(el => el.done).length;
     const todoCount = todoData.length - doneCount;
 
@@ -122,7 +123,7 @@ class App extends Component {
               onFilter={this.handleFilter}
             />
             <TodoList
-              todoData={this.state.todoData}
+              todoData={this.visibleItems(todoData, search)}
               onDelete={this.handleDelete}
               onToggleItemDone={this.handleToggleItemDone}
               onToggleItemImportant={this.handleToggleItemImportant}
