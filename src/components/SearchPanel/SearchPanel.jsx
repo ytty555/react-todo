@@ -5,16 +5,15 @@ import './SearchPanel.css';
 
 class SearchPanel extends Component {
   state = {
-    lable: 'l'
+    lable: ''
   };
 
 
-  // TODO
   handleOnChange = e => {
     const {onSearchString} = this.props;
+    onSearchString(e.target.value);
 
     this.setState({lable: e.target.value});
-    onSearchString(this.state.lable);
 
   };
 

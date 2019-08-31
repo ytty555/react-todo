@@ -23,8 +23,6 @@ class App extends Component {
     if (!search) return items;
     
     const regexp = new RegExp(search, 'i');
-    console.log('regexp ', regexp);
-    console.log(regexp);
     return items.filter((item) => item.lable.search(regexp) > -1);
   }
 
@@ -102,9 +100,9 @@ class App extends Component {
     });
   };
 
-  handleSearchString = search => {
+  handleSearchString = text => {
     this.setState(({search}) => {
-      return {search};
+      return {search: text};
     })
   }
 
