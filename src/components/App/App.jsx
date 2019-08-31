@@ -26,7 +26,6 @@ class App extends Component {
     return items.filter((item) => item.lable.search(regexp) > -1);
   }
 
-  // TODO 
   filterItems(items, filter) {
     switch(filter) {
       case 'all':
@@ -101,31 +100,40 @@ class App extends Component {
     })
   }
 
+  handleOnFilter = value => {
+    this.setState(({filter}) => {
+      return {filter: value};
+    })
+  }
+
   render() {
     const {todoData, search, filter} = this.state;
     const doneCount = todoData.filter(el => el.done).length;
     const todoCount = todoData.length - doneCount;
-
+    
     return (
       <section className="container app-container">
         <div className="row justify-content-center">
           <div className="col-5">
             <AppHeader todo={todoCount} done={doneCount} />
             <SearchPanel
+              activeButton={filter}
               onSearchString={this.handleSearchString}
+              onFilter={this.handleOnFilter}
             />
             <TodoList
               todoData={this.filterItems(this.visibleItems(todoData, search), filter)}
               onDelete={this.handleDelete}
               onToggleItemDone={this.handleToggleItemDone}
               onToggleItemImportant={this.handleToggleItemImportant}
-            />
-            <ItemAdd onAddItem={this.handleAddItemToList} />
-          </div>
-        </div>
-      </section>
-    );
-  }
-}
-
-export default App;
+              />
+              <ItemAdd onAddItem={this.handleAddItemToList} />
+              </div>
+              </div>
+              </section>
+              );
+            }
+          }
+          
+          export default App;
+          

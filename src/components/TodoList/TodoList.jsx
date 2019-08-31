@@ -10,7 +10,6 @@ const TodoList = ({
   onToggleItemImportant
 }) => {
   const elements = todoData.map(el => {
-    if (el.visible) {
       return (
         <div className="row" key={el.id}>
           <div className="col-12">
@@ -25,9 +24,6 @@ const TodoList = ({
           </div>
         </div>
       );
-    } else {
-      return null;
-    }
   });
 
   return <ul className="list-group todo-list">{elements}</ul>;

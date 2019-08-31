@@ -3,69 +3,35 @@ import React, {Component} from 'react';
 import './StateFilter.css';
 
 class StateFilter extends Component {
-  state = {
-    btnCheck: {
-      all: true,
-      active: false,
-      done: false
-    }
-  };
-
-  handleBtnChecked = e => {
-    // Take button name as string
-    const currBtn = e.target.textContent.toLowerCase();
-    // Make copy of the state to variable "stateCopy"
-    const stateCopy = {...this.state.btnCheck};
-
-    // eslint-disable-next-line
-    for (let key in this.state.btnCheck) {
-      stateCopy[key] = key === currBtn ? true : false;
-    }
-
-    this.setState(({btnCheck}) => {
-      return {
-        btnCheck: stateCopy
-      };
-    });
-
-  };
-
+  
   render() {
-    const {btnCheck} = this.state;
+    const buttons = [
+      {value: 'all', lable: 'All'},
+      {value: 'active', lable: 'Active'},
+      {value: 'done', lable: 'Done'},
+    ];
 
-    const allClassName = btnCheck.all
-      ? 'btn btn-info'
-      : 'btn btn-outline-secondary';
-    const activeClassName = btnCheck.active
-      ? 'btn btn-info'
-      : 'btn btn-outline-secondary';
-    const doneClassName = btnCheck.done
-      ? 'btn btn-info'
-      : 'btn btn-outline-secondary';
+    const {activeButton, onFilter} = this.props;
+
+    const btnElements = buttons.map((btn) => {
+      const isActive = (activeButton === btn.value);
+      const className = isActive ? 'btn btn-info' : 'btn btn-outline-secondary';
+
+      return (
+        <button
+          key={btn.value}
+          type="button"
+          className={className}
+          onClick={() => onFilter(btn.value)}
+        >
+        {btn.lable}
+        </button>
+      );
+    })
 
     return (
       <div className="btn-group col-4" role="group" aria-label="Basic example">
-        <button
-          type="button"
-          className={allClassName}
-          onClick={this.handleBtnChecked}
-        >
-          All
-        </button>
-        <button
-          type="button"
-          className={activeClassName}
-          onClick={this.handleBtnChecked}
-        >
-          Active
-        </button>
-        <button
-          type="button"
-          className={doneClassName}
-          onClick={this.handleBtnChecked}
-        >
-          Done
-        </button>
+        {btnElements}
       </div>
     );
   }

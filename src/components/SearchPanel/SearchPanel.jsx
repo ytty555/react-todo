@@ -18,7 +18,7 @@ class SearchPanel extends Component {
   };
 
   render() {
-    const {onFilter} = this.props;
+    const {onFilter, activeButton} = this.props;
     return (
       <div className="row mb-3">
         <div className="input-group col-8">
@@ -30,7 +30,9 @@ class SearchPanel extends Component {
             onChange={this.handleOnChange}
           ></input>
         </div>
-        <StateFilter onFilter={onFilter} />
+        <StateFilter 
+          activeButton={activeButton}
+          onFilter={onFilter} />
       </div>
     );
   }
