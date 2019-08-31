@@ -16,7 +16,7 @@ class App extends Component {
       this.createItemObj('Read a book')
     ],
     search: '', // any symbols
-    filter: '' // 'all', 'active', 'done'
+    filter: 'all' // 'all', 'active', 'done'
   };
 
   visibleItems(items, search) {
@@ -24,6 +24,21 @@ class App extends Component {
     
     const regexp = new RegExp(search, 'i');
     return items.filter((item) => item.lable.search(regexp) > -1);
+  }
+
+  // TODO 
+  filterItems(items, filter) {
+    switch(filter) {
+      case 'all':
+        return items;
+      case 'active':
+          return items.filter((item) => !item.done);
+          case 'done':
+        return items.filter((item) => item.done);
+      default:
+        return items;
+    }
+
   }
 
   handleToggleItemDone = id => {
@@ -80,26 +95,6 @@ class App extends Component {
     });
   };
 
-
-  handleFilter = filter => {
-    this.setState(({todoData}) => {
-      const todoDataCopy = [...todoData];
-      if (filter === 'all') {
-        todoDataCopy.forEach(el => (el.visible = true));
-      } else if (filter === 'active') {
-        todoDataCopy.forEach(el => {
-          el.visible = el.done ? false : true;
-        });
-      } else if (filter === 'done') {
-        todoDataCopy.forEach(el => {
-          el.visible = el.done ? true : false;
-        });
-      }
-
-      return {todoData: todoDataCopy};
-    });
-  };
-
   handleSearchString = text => {
     this.setState(({search}) => {
       return {search: text};
@@ -107,7 +102,7 @@ class App extends Component {
   }
 
   render() {
-    const {todoData, search} = this.state;
+    const {todoData, search, filter} = this.state;
     const doneCount = todoData.filter(el => el.done).length;
     const todoCount = todoData.length - doneCount;
 
@@ -118,10 +113,9 @@ class App extends Component {
             <AppHeader todo={todoCount} done={doneCount} />
             <SearchPanel
               onSearchString={this.handleSearchString}
-              onFilter={this.handleFilter}
             />
             <TodoList
-              todoData={this.visibleItems(todoData, search)}
+              todoData={this.filterItems(this.visibleItems(todoData, search), filter)}
               onDelete={this.handleDelete}
               onToggleItemDone={this.handleToggleItemDone}
               onToggleItemImportant={this.handleToggleItemImportant}
